@@ -5,7 +5,6 @@ using UnityEngine;
 public class Road : MonoBehaviour
 {
     GroundSpawner groundSpawner;
-    public GameObject obstaclePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -17,19 +16,5 @@ public class Road : MonoBehaviour
     {
         groundSpawner.SpawnRoad();
         Destroy(gameObject, 2);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void SpawnObstacle()
-    {
-        int obstacleSpawnIndex = Random.Range(2, 5);
-        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
-
-        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity);
     }
 }
