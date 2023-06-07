@@ -6,9 +6,10 @@ public class ObstacleSpawner : MonoBehaviour
 {
     public GameObject obstaclePrefab;
     public GameObject player;
-    public float spawnDistance = 40f;
-    public float destroyDistance = 100f; // Distance at which obstacles are destroyed
-    public float spawnInterval = 1.5f;
+    public PlayerManager playerManager;
+    public float spawnDistance = 30f;
+    public float destroyDistance = 40f; // Distance at which obstacles are destroyed
+    public float spawnInterval = 0.75f;
 
     private float timer = 0f;
     private List<GameObject> spawnedObstacles = new List<GameObject>();
@@ -20,15 +21,33 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Update()
     {
+
         if (player != null)
         {
+            if (playerManager.speed > 9f && playerManager.speed <= 15f)
+            {
+                spawnDistance = 40f;
+                destroyDistance = 45f;
+                spawnInterval = 0.5f;
+            }
+            else if (playerManager.speed > 15f && playerManager.speed <= 50f)
+            {
+                spawnDistance = 50f;
+                destroyDistance = 55f;
+                spawnInterval = 0.3f;
+            } else if (playerManager.speed > 50f) {
+                spawnDistance = 60f;
+                destroyDistance = 65f;
+                spawnInterval = 0.2f;
+            }
+
             timer += Time.deltaTime;
 
             if (timer >= spawnInterval)
             {
                 Vector3 spawnPosition = player.transform.position + player.transform.forward * spawnDistance;
                 spawnPosition.y = 1f; // Set the y-coordinate to 1
-                spawnPosition.x = Random.Range(-5f, 3f); // Randomize the z-coordinate
+                spawnPosition.x = Random.Range(-5.5f, 3f); // Randomize the z-coordinate
                 // rotate the obstacle to 90 degrees
 
 
