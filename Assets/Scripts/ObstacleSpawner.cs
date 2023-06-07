@@ -24,6 +24,7 @@ public class ObstacleSpawner : MonoBehaviour
 
         if (player != null)
         {
+            // Makes the obstacles spawn faster as the player's speed increases
             if (playerManager.speed > 9f && playerManager.speed <= 15f)
             {
                 spawnDistance = 40f;
@@ -42,6 +43,7 @@ public class ObstacleSpawner : MonoBehaviour
             }
 
             timer += Time.deltaTime;
+
 
             if (timer >= spawnInterval)
             {
@@ -63,6 +65,7 @@ public class ObstacleSpawner : MonoBehaviour
         CheckDestroyDistance();
     }
 
+    // Destroys obstacles that are too far away from the player
     private void CheckDestroyDistance()
     {
         for (int i = spawnedObstacles.Count - 1; i >= 0; i--)

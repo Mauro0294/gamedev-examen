@@ -1,14 +1,22 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
     public float speed = 5f;
     public Rigidbody rb;
-    public int health = 5;
+    public int damage = 0;
+
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI scoreText;
+    float score;
+    int roundedScore;
+
     float horizontalInput;
     float timer = 0f;
     float increaseSpeedInterval = 5f;
     float speedIncreaseAmount = 2f;
+
     float minX = -5.5f;
     float maxX = 3f;
 
@@ -35,6 +43,8 @@ public class PlayerManager : MonoBehaviour
     {
         // Move the vehicle left and right based on keyboard input
         horizontalInput = Input.GetAxis("Horizontal");
+
+        updateUI();
     }
 
     void UpdateSpeed()
@@ -47,16 +57,33 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            health--;
-            if (health <= 0) {
+            damage += 20;
+            if (damage >= 100) {
                 Destroy(gameObject);
             } else {
                 Destroy(other.gameObject);
             }
         }
+    }
+
+    void updateUI()
+    {
+        score += Time.deltaTime * 15;
+
+        if (scoreText != null)
+        {
+            roundedScore = Mathf.RoundToInt(score);
+            scoreText.text = "Score: " + roundedScore.ToString();
+        }
+
+        if (damageText != null)
+        {
+            damageText.text = "Damage: " + damage + "%";
+        }
+        
     }
 }
