@@ -5,10 +5,12 @@ public class PlayerManager : MonoBehaviour
 {
     public float speed = 5f;
     public Rigidbody rb;
-    public int damage = 0;
+    int damage = 0;
 
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOverScore;
+
     float score;
     int roundedScore;
 
@@ -20,22 +22,27 @@ public class PlayerManager : MonoBehaviour
     float minX = -5.5f;
     float maxX = 3f;
 
+    public GameObject restartObject;
+
     void FixedUpdate()
     {
         UpdateSpeed();
 
         // Move the vehicle forward constantly
-        Vector3 moveForward = transform.forward * speed * Time.fixedDeltaTime;
+        if (rb != null)
+        {
+            Vector3 moveForward = transform.forward * speed * Time.fixedDeltaTime;
 
-        // Use the horizontal input to move the vehicle left and right
-        Vector3 moveHorizontal = transform.right * horizontalInput * speed * Time.fixedDeltaTime;
+            // Use the horizontal input to move the vehicle left and right
+            Vector3 moveHorizontal = transform.right * horizontalInput * speed * Time.fixedDeltaTime;
 
-        Vector3 newPosition = rb.position + moveForward + moveHorizontal;
+            Vector3 newPosition = rb.position + moveForward + moveHorizontal;
 
-        // Clamp the new position within the allowed range
-        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+            // Clamp the new position within the allowed range
+            newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
 
-        rb.MovePosition(newPosition);
+            rb.MovePosition(newPosition);
+        }
     }
 
     // Update is called once per frame
@@ -64,6 +71,11 @@ public class PlayerManager : MonoBehaviour
             damage += 20;
             if (damage >= 100) {
                 Destroy(gameObject);
+                restartObject.SetActive(true);
+                gameOverScore.text = "Score: " + roundedScore.ToString();
+
+                damageText.gameObject.SetActive(false);
+                scoreText.gameObject.SetActive(false);
             } else {
                 Destroy(other.gameObject);
             }

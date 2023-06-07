@@ -7,19 +7,19 @@ public class ObstacleSpawner : MonoBehaviour
     public GameObject obstaclePrefab;
     public GameObject player;
     public PlayerManager playerManager;
-    public float spawnDistance = 30f;
-    public float destroyDistance = 40f; // Distance at which obstacles are destroyed
-    public float spawnInterval = 0.75f;
+    float spawnDistance = 30f;
+    float destroyDistance = 40f; // Distance at which obstacles are destroyed
+    float spawnInterval = 0.75f;
 
-    private float timer = 0f;
-    private List<GameObject> spawnedObstacles = new List<GameObject>();
+    float timer = 0f;
+    List<GameObject> spawnedObstacles = new List<GameObject>();
 
-    private void Start()
+    void Start()
     {
         player = GameObject.Find("Player");
     }
 
-    private void Update()
+    void Update()
     {
 
         if (player != null)
@@ -66,7 +66,7 @@ public class ObstacleSpawner : MonoBehaviour
     }
 
     // Destroys obstacles that are too far away from the player
-    private void CheckDestroyDistance()
+    void CheckDestroyDistance()
     {
         for (int i = spawnedObstacles.Count - 1; i >= 0; i--)
         {
