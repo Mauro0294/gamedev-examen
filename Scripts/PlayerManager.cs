@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     float maxX = 3f;
 
     public AudioSource audioSource;
+    public AudioSource collisionSound;
 
     public GameObject restartObject;
 
@@ -72,6 +73,7 @@ public class PlayerManager : MonoBehaviour
         // Player collides with obstacle
         if (other.gameObject.CompareTag("Obstacle"))
         {
+            collisionSound.Play();
             damage += 20;
 
             // Player gets destroyed/dies when the damage reaches 100
