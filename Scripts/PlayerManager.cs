@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioSource collisionSound;
+    public AudioSource gameOverSound;
 
     public GameObject restartObject;
 
@@ -73,12 +74,12 @@ public class PlayerManager : MonoBehaviour
         // Player collides with obstacle
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            collisionSound.Play();
             damage += 20;
 
             // Player gets destroyed/dies when the damage reaches 100
             if (damage >= 100)
             {
+                gameOverSound.Play();
                 Destroy(gameObject);
 
                 // Show the restart menu
@@ -90,6 +91,7 @@ public class PlayerManager : MonoBehaviour
                 audioSource.Stop();
             } else {
                 // If the player still doesn't have 100 damage, it will destroy the obstacle
+                collisionSound.Play();
                 Destroy(other.gameObject);
             }
         }
